@@ -1,11 +1,10 @@
-
+import random
 class Decision:
     def __init__(self,game):
         self.game = game
     
-    def analysis(self,game):
+    def game_decison(self,game):
         if ask.game == 'bridge':
-            print('here')
             deck = Standard.fileHandler()
             
 class Standard:
@@ -13,14 +12,18 @@ class Standard:
         print()
    
     def fileHandler():
-        with open('deck51.txt') as f:
+        with open('deck52.txt') as f:
             contents = f.read()
-            spades = (contents[1:27])
-            hearts = (contents[27:53])
-            diamonds = (contents[53:79])
-            clubs = (contents[79:105])
-            print(clubs)
+            n = 2
+            shift = ([contents[i:i+n] for i in range(-1, len(contents), n)])
+            shift.pop(0) #deletes first item in list
+            random.shuffle(shift)
+            if ask.game == 'bridge':
+                print()
+                
+            print(shift) #delete 
+
             
 ask = Decision(input(''))
-Decision.analysis('','')
+Decision.game_decison('','')
 print(ask.game)
