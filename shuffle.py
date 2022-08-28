@@ -24,7 +24,7 @@ class Deal:
     def hand(deck,players):
         for x in range(players):
             hand = (deck[((x-1)*13):(x*13)])
-            print(hand)
+            
             
 ask = Game(input('')) #this is a temp replacment of another input
 Game.decison('','') #this will need to be called in main file
