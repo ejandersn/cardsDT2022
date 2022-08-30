@@ -15,6 +15,7 @@ class Arrange:
             shift = ([contents[i:i+2] for i in range(-1, len(contents), 2)])
             shift.pop(0) #try deck = shift.pop(0)
             # strArray = contents.split()
+            # cards = shift.pop(0)
             Arrange.shuffle(shift)
             
     def shuffle(deck):
@@ -27,14 +28,14 @@ class Deal:
         ypos = 200
         for x in range(players):
             hand = (deck[((x-1)*13):(x*13)]) #note this range is only applicable to 4 peoople 
-            x=0
+            a=0
             for i in hand:
-                if x == 0:
+                if a == 0:
                     ypos = ypos + 80
                 card = i
-                x = x+1
+                a = a+1
                 screen = pygame.display.set_mode([800,800])
-                cards(screen,card,[(50*x),ypos])
+                cards(screen,card,[(50*a),ypos])
             
             
 ask = Game(input('')) #this is a temp replacment of another input

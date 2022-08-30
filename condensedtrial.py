@@ -1,5 +1,6 @@
 from email.mime import image
 import pygame
+from display import cards
 from pygame.fastevent import init
 from pygame.locals import(
     KEYDOWN,
@@ -8,6 +9,7 @@ from pygame.locals import(
     MOUSEBUTTONDOWN,
     WINDOWCLOSE      
 )
+import pygame
 
 class cards(pygame.sprite.Sprite):
     def __init__(self, width, height,screen):

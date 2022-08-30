@@ -1,9 +1,11 @@
 import pygame
-class Display(pygame.sprite.Sprite):
-    def __init__(self, width, height,screen):
+
+class cards(pygame.sprite.Sprite):
+    def __init__(self,screen,card,position):
         pygame.sprite.Sprite.__init__(self)
-        image = pygame.image.load('/Users/eva/Desktop/cardsDT2022/card_images/KS.png')
-        self.image = pygame.Surface([10,10])
-        # self.rect.left, self.rect.top = [50,50]
+        file = (card+'.png')
+        path = ('/Users/eva/Desktop/cardsDT2022/card_images/'+file)
+        image = pygame.image.load(path)
         self.rect = image.get_rect()
-        screen.blit(self.image,self.rect)  
+        self.rect.left, self.rect.top = position
+        screen.blit(image,self.rect)  
