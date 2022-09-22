@@ -4,32 +4,31 @@ import pygame
 from display import cards
 
 class Game:
-    def decison(game):
-        Arrange.fileHandler('',game)
+    def decison(game,screen):
+        Arrange.fileHandler('',game,screen)
 
 class Arrange:
-    def fileHandler(self,game):
+    def fileHandler(self,game,screen):
         with open(game+'.txt', "r", encoding='utf-8-sig') as f:
             contents = f.read()
             deck =  contents
             deck = wrap(deck,2)
-            Arrange.shuffle(deck)
+            Arrange.shuffle(screen,deck)
     
-    def shuffle(deck):
+    def shuffle(screen,deck):
         random.shuffle(deck)
-        print (deck)
+        # print (deck)
         input = 4 #mod input
         if input == 4:
-            players = 5 #needs input replacment/mod as 4 = 1,5
+            players = 5 #needs input replacment
         num = len(deck) #replace with user input for boundary testing
         card_num = int(num/input)
-        Deal.hand(deck,players,card_num)
+        Deal.hand(screen,deck,players,card_num)
         
 class Deal:
-    def hand(deck,players,card_num):
+    def hand(screen,deck,players,card_num):
         ypos = 100
         xpos = 50 
-        a = 0
         for x in range (players):
             hand = deck[((x-1)*card_num):(x*card_num)]
             hand.insert(14,'bk')
@@ -44,11 +43,11 @@ class Deal:
                 if iteration == 4:
                     ypos = 340
                 a = a + 1
-                screen = pygame.display.set_mode([800,800])
+                # screen = pygame.display.set_mode([800,800])
                 cards(screen,card,[(xpos*a),ypos])
 
                 
-ask = Game.decison('deck52')
+
 
 
 
