@@ -1,43 +1,59 @@
+from textwrap import wrap
 import random
 import pygame
 from display import cards
+
 class Game:
-    def __init__(self,game):
-        self.game = game
-    
-    def decison(self,game):
-        Arrange.fileHandler('',ask.game)
-            
+    def decison(game):
+        Arrange.fileHandler('',game)
+
 class Arrange:
     def fileHandler(self,game):
-        with open(game+'.txt') as f:
+        with open(game+'.txt', "r", encoding='utf-8-sig') as f:
             contents = f.read()
-            shift = ([contents[i:i+2] for i in range(-1, len(contents), 2)])
-            shift.pop(0) #try deck = shift.pop(0)
-            # strArray = contents.split()
-            # cards = shift.pop(0)
-            Arrange.shuffle(shift)
-            
+            deck =  contents
+            deck = wrap(deck,2)
+            Arrange.shuffle(deck)
+    
     def shuffle(deck):
         random.shuffle(deck)
-        input = 4 #temp replacment of another input
-        Deal.hand(deck,(input+1))
+        print (deck)
+        input = 4 #mod input
+        if input == 4:
+            players = 5 #needs input replacment/mod as 4 = 1,5
+        num = len(deck) #replace with user input for boundary testing
+        card_num = int(num/input)
+        Deal.hand(deck,players,card_num)
         
 class Deal:
-    def hand(deck,players):
-        ypos = 200
-        for x in range(players):
-            hand = (deck[((x-1)*13):(x*13)]) #note this range is only applicable to 4 peoople 
-            a=0
-            for i in hand:
-                if a == 0:
-                    ypos = ypos + 80
-                card = i
-                a = a+1
+    def hand(deck,players,card_num):
+        ypos = 100
+        xpos = 50 
+        a = 0
+        for x in range (players):
+            hand = deck[((x-1)*card_num):(x*card_num)]
+            hand.insert(14,'bk')
+            iteration = x
+            a = 0
+            for x in hand:
+                card = x
+                if iteration == 2:
+                    ypos = 180
+                elif iteration == 3:
+                    ypos = 260
+                if iteration == 4:
+                    ypos = 340
+                a = a + 1
                 screen = pygame.display.set_mode([800,800])
-                cards(screen,card,[(50*a),ypos])
-            
-            
-ask = Game(input('')) #this is a temp replacment of another input
-Game.decison('','') #this will need to be called in main file
+                cards(screen,card,[(xpos*a),ypos])
+
+                
+ask = Game.decison('deck52')
+
+
+
+
+
+
+
 
