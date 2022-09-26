@@ -3,30 +3,29 @@ import random
 import pygame
 from display import cards
 
-class Game:
+class Game: #remove?
     def decison(game,screen):
         Arrange.fileHandler('',game,screen)
 
 class Arrange:
-    def fileHandler(self,game,screen):
+    def fileHandler(game):
         with open(game+'.txt', "r", encoding='utf-8-sig') as f:
             contents = f.read()
             deck =  contents
             deck = wrap(deck,2)
-            Arrange.shuffle(screen,deck)
+            return deck
     
-    def shuffle(screen,deck):
+    def shuffle(deck):
         random.shuffle(deck)
-        # print (deck)
+        return deck
+        
+class Deal:
+    def hand(screen,deck):
         input = 4 #mod input
         if input == 4:
             players = 5 #needs input replacment
-        num = len(deck) #replace with user input for boundary testing
+        num = len(deck)  #replace with user input for boundary testing
         card_num = int(num/input)
-        Deal.hand(screen,deck,players,card_num)
-        
-class Deal:
-    def hand(screen,deck,players,card_num):
         ypos = 100
         xpos = 50 
         for x in range (players):
@@ -45,14 +44,3 @@ class Deal:
                 a = a + 1
                 # screen = pygame.display.set_mode([800,800])
                 cards(screen,card,[(xpos*a),ypos])
-
-                
-
-
-
-
-
-
-
-
-
