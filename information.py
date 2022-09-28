@@ -23,7 +23,7 @@ class Instructions:
         messagebox.showinfo('Automated Games','Ki te purei keemu aunoa Bridge perehi 2')
         
 class Labels:
-    def __init__(self,screen,iteration,ypos,xpos):
+    def player(screen,ypos,xpos):
         pygame.display.set_caption('Show Text')
         font = pygame.font.Font('freesansbold.ttf', 15)
         text = font.render(('Player'), True, black, white)
@@ -32,3 +32,17 @@ class Labels:
         locationx = xpos
         locationy = ypos - 20
         screen.blit(text,(locationx,locationy))
+        
+    def power(screen):
+            # value = value.decode("utf-8")
+            # iteration = iteration.decode("utf-8")
+            bro = ("Power cards:")
+            pygame.display.set_caption('Show Text')
+            font = pygame.font.Font('freesansbold.ttf', 20)
+            text = font.render(bro, True, black, white)
+            textRect = text.get_rect()
+            textRect.center = (800 // 2, 800 // 2)
+            locationx = 800
+            locationy = 50
+            screen.blit(text,(locationx,locationy))
+            

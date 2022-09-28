@@ -1,8 +1,8 @@
 from textwrap import wrap
 import random
 import pygame
-from display import cards
-from information import Instructions, Labels
+from display import cards, powercards
+from information import  Labels
 
 class Arrange:
     def fileHandler(game):
@@ -27,11 +27,11 @@ class Deal:
         card_num = int(num/input)
         ypos = 100
         xpos = 50 
-        for x in range (players):
-            hand = deck[((x-1)*card_num):(x*card_num)]
+        for i in range (players):
+            hand = deck[((i-1)*card_num):(i*card_num)]
             length = len(hand)
             hand.insert(length + 1,'bk')
-            iteration = x
+            iteration = i
             if players == 5:
                 if iteration == 2:
                         ypos = 300
@@ -49,16 +49,46 @@ class Deal:
                     ypos = 500
             b = 0
             a = 0
-            for x in hand:
+            for z in hand:
+                card = z
+                
+                # powercards = ['AS','KS','QS','JS','AC','KC','QC','JC','AD','KD','QD','JD','AH','KH','QH','JH']
+                
+                # Power(screen,ypos,xpos*a)
                 if a == 1 and b < 12:
-                    Labels(screen,iteration,ypos,xpos)
-                card = x
+                    Labels.player(screen,ypos,xpos)
+                # if b > 0:
+                #     cards.find_power(screen,c,card,iteration,length,b)
                 if length > 14:
                     if a > 12:
                         ypos = ypos + 100 #between row same player split
                         a = 0
+                
                 b = b + 1
                 a = a + 1
                 cards(screen,card,[(xpos*a),ypos])
+                
+class SpecialCards:
+    def makeList(input):
+        input = str(input)
+        remove_space = input.replace(' ','')
+        special_list = wrap(remove_space,2)
+        length = len(special_list)
+        special_list.insert(length + 1,'bk')
+        return special_list
+    
+    def deal(list,screen):
+        a = 0
+        ypos = 100
+        xpos = 500
+        Labels.power(screen)
+        for x in list:
+            a = a + 50
+            card = x
+            cards(screen,card,[(800 + a),ypos])
+        
+            
+            
+
 
 

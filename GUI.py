@@ -1,5 +1,5 @@
 import pygame
-from shuffle import Arrange, Deal
+from shuffle import Arrange, Deal, SpecialCards
 from tkinter import *
 from information import Instructions
 from pygame.locals import(
@@ -9,7 +9,8 @@ from pygame.locals import(
     K_s,
     K_p,
     K_1,
-    K_2
+    K_2,
+    K_w
 )
 
 class display:
@@ -36,6 +37,7 @@ class display:
         
         x = 0
         deck = []
+        special_list = []
         while running:
             a = 0
             x = x + 1
@@ -50,11 +52,15 @@ class display:
                 if (event.type == KEYDOWN and event.key == K_1):
                     players = 2
                 if (event.type == KEYDOWN and event.key == K_2):
-                    players = 4          
+                    players = 4 
+                if (event.type == KEYDOWN and event.key == K_w):
+                    special_cards = input('Please enter all special cards in the format 4H 6C') 
+                    special_list = SpecialCards.makeList(special_cards)
                     
-            screen = pygame.display.set_mode([800,800])
+                        
+                    
+            screen = pygame.display.set_mode([1200,800])
             screen.fill((255,255,255))
-            # display_surface.blit(text, textRect)
             if x == 1:
                 ask = input('Custom Game (y/n)')
                 if ask == 'y':
@@ -68,6 +74,7 @@ class display:
                     else:
                         players = int(input('Number of Players:'))
             Deal.hand(screen,deck,players)
+            SpecialCards.deal(special_list,screen)
             pygame.display.update()
 
         pygame.quit()  
