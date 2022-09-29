@@ -22,7 +22,6 @@ class Deal:
             players = input + 1 #needs input replacment
         else:
             exit()
-
         num = len(deck)  #replace with user input for boundary testing
         card_num = int(num/input)
         ypos = 100
@@ -51,19 +50,12 @@ class Deal:
             a = 0
             for z in hand:
                 card = z
-                
-                # powercards = ['AS','KS','QS','JS','AC','KC','QC','JC','AD','KD','QD','JD','AH','KH','QH','JH']
-                
-                # Power(screen,ypos,xpos*a)
                 if a == 1 and b < 12:
                     Labels.player(screen,ypos,xpos)
-                # if b > 0:
-                #     cards.find_power(screen,c,card,iteration,length,b)
                 if length > 14:
                     if a > 12:
                         ypos = ypos + 100 #between row same player split
                         a = 0
-                
                 b = b + 1
                 a = a + 1
                 cards(screen,card,[(xpos*a),ypos])
@@ -79,14 +71,23 @@ class SpecialCards:
     
     def deal(list,screen):
         a = 0
+        b = 0
         ypos = 100
-        xpos = 500
+        xpos = 750
+        length = len(list)
         Labels.power(screen)
         for x in list:
-            a = a + 50
+            b = b + 1
+            if length > 6:
+                if b == 9:
+                    ypos = 200
+                    a = 0
+                if b == 18:
+                    ypos = 300
+                    a = 0
             card = x
-            cards(screen,card,[(800 + a),ypos])
-        
+            cards(screen,card,[(xpos + a),ypos])
+            a = a + 50
             
             
 
