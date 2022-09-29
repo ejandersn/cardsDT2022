@@ -1,7 +1,7 @@
 from textwrap import wrap
 import random
 import pygame
-from display import cards, powercards
+from display import cards
 from information import  Labels
 
 class Arrange:
@@ -90,6 +90,21 @@ class SpecialCards:
             a = a + 50
             
             
-
+class UserInput:
+    def players():
+        loop = True
+        while loop == True:
+            players = input('Number of Players:')
+            try:
+                players = int(players)
+            except ValueError:
+                print('Input not a number')
+            kind = type(players)
+            if kind == int:
+                if players > 0 and players < 5:
+                    return players
+                    loop = False
+            
+    
 
 

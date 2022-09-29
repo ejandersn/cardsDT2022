@@ -1,6 +1,6 @@
 import pygame
 from display import instructions
-from shuffle import Arrange, Deal, SpecialCards
+from shuffle import Arrange, Deal, SpecialCards, UserInput
 from tkinter import *
 from pygame.locals import(
     KEYDOWN,
@@ -14,18 +14,22 @@ from pygame.locals import(
 )
 
 class display:
-    
-
-        
-    def players():
-        pass
 
     def start(self):
         green = (0, 255, 0)
         blue = (0, 0, 128)
-        asklang = input('english or māori? ')
-        language = 'english'
         
+        language = 'english'
+        loop = True 
+        while loop == True:  
+            asklang = input('English or Te Reo? (e/t) ')    
+            if asklang == 't' or asklang == 'T':
+                language = 'tereo'
+                loop = False
+            if asklang == 'e' or asklang == 'E':
+                language = 'english'
+                loop = False
+                
         pygame.init()
         running = True
         display_surface = pygame.display.set_mode((800, 800))
@@ -43,7 +47,7 @@ class display:
                     deck = Arrange.fileHandler('deck52')
                     shuffle = Arrange.shuffle(deck)
                 if (event.type == KEYDOWN and event.key == K_p):
-                    players = int(input('Number of Players:'))
+                    players = UserInput.players()
                 if (event.type == KEYDOWN and event.key == K_1): #snap
                     players = 2
                     special_cards = ('')
@@ -61,16 +65,19 @@ class display:
             screen = pygame.display.set_mode([1200,800])
             screen.fill((255,255,255))
             
-            if x == 1:              
-                if asklang == 'maori' or asklang == 'māori' or asklang == 'tereo' or asklang == 'te reo':
-                    language = 'tereo'
-                else:
-                    language = 'english'
-                ask = input('Custom Game (y/n)')
+            if x == 1:       
+               
+                        
+                loop = True
+                while loop == True:
+                    ask = input('Custom Game (y/n)')
+                    if ask == 'y' or ask == 'n':
+                        loop = False
+                        
                 if ask == 'y':
-                    players = int(input('Number of Players:'))
+                    players = UserInput.players()
                 else:
-                    game = input('Bridge or Snap')
+                    game = input('Bridge or Snap: ')
                     if game == 'bridge':
                         players = 4
                         special_cards = ('ACKCQCJCASKSQSJSADKDQDJDAHKHQHJH')
@@ -81,7 +88,8 @@ class display:
                         special_cards = ('')
                         special_list = SpecialCards.makeList(special_cards)
                     else:
-                        players = int(input('Number of Players:'))
+                        players = UserInput.players()
+                        
             instructions(screen,language,(750,375))
             Deal.hand(screen,deck,players)
             SpecialCards.deal(special_list,screen)
