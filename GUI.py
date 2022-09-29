@@ -1,7 +1,7 @@
 import pygame
+from display import instructions
 from shuffle import Arrange, Deal, SpecialCards
 from tkinter import *
-from information import Instructions
 from pygame.locals import(
     KEYDOWN,
     K_ESCAPE,
@@ -23,15 +23,10 @@ class display:
     def start(self):
         green = (0, 255, 0)
         blue = (0, 0, 128)
-        language = input('english or māori? ')
-        
-        if language == 'maori' or language == 'māori':
-            Instructions.māori_message()
-        else:
-            Instructions.english_message()
+        asklang = input('english or māori? ')
+        language = 'english'
         
         pygame.init()
-        Tk().wm_withdraw()
         running = True
         display_surface = pygame.display.set_mode((800, 800))
         
@@ -41,7 +36,7 @@ class display:
         while running:
             a = 0
             x = x + 1
-            for event in pygame.event.get():
+            for event in pygame.event.get(): #make better
                 if(event.type == WINDOWCLOSE or (event.type == KEYDOWN and event.key == K_ESCAPE)):
                     running = False
                 if (event.type == KEYDOWN and event.key == K_s):
@@ -49,10 +44,14 @@ class display:
                     shuffle = Arrange.shuffle(deck)
                 if (event.type == KEYDOWN and event.key == K_p):
                     players = int(input('Number of Players:'))
-                if (event.type == KEYDOWN and event.key == K_1):
+                if (event.type == KEYDOWN and event.key == K_1): #snap
                     players = 2
-                if (event.type == KEYDOWN and event.key == K_2):
+                    special_cards = ('')
+                    special_list = SpecialCards.makeList(special_cards)
+                if (event.type == KEYDOWN and event.key == K_2): #bridge
                     players = 4 
+                    special_cards = ('ACKCQCJCASKSQSJSADKDQDJDAHKHQHJH')
+                    special_list = SpecialCards.makeList(special_cards)
                 if (event.type == KEYDOWN and event.key == K_w):
                     special_cards = input('Please enter all special cards in the format 4H 6C') 
                     special_list = SpecialCards.makeList(special_cards)
@@ -61,7 +60,12 @@ class display:
                     
             screen = pygame.display.set_mode([1200,800])
             screen.fill((255,255,255))
-            if x == 1:
+            
+            if x == 1:              
+                if asklang == 'maori' or asklang == 'māori' or asklang == 'tereo' or asklang == 'te reo':
+                    language = 'tereo'
+                else:
+                    language = 'english'
                 ask = input('Custom Game (y/n)')
                 if ask == 'y':
                     players = int(input('Number of Players:'))
@@ -69,10 +73,16 @@ class display:
                     game = input('Bridge or Snap')
                     if game == 'bridge':
                         players = 4
+                        special_cards = ('ACKCQCJCASKSQSJSADKDQDJDAHKHQHJH')
+                        special_list = SpecialCards.makeList(special_cards)
+                        #put in special cards automatically
                     elif game == 'snap':
                         players = 2
+                        special_cards = ('')
+                        special_list = SpecialCards.makeList(special_cards)
                     else:
                         players = int(input('Number of Players:'))
+            instructions(screen,language,(750,375))
             Deal.hand(screen,deck,players)
             SpecialCards.deal(special_list,screen)
             pygame.display.update()
